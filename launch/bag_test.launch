@@ -1,0 +1,39 @@
+<launch>
+    <node 
+        pkg="rosbag" 
+        type="play" 
+        name="video"  
+        args="-l $(find compression)/bag/bag1.bag"
+        required="true"
+    />
+
+    <node
+        pkg="compression"
+        type="h265_decoder_node_executable"
+        name="decoder"
+        required="true"
+        args=""
+    />
+
+    <node 
+        pkg="compression" 
+        type="h265_compressor_node_executable" 
+        name="compression"  
+        args=""
+    />
+    <!-- Image size -->
+    <param name="img_width"     type="int" value="2048" />
+    <param name="img_height"    type="int" value="1536" />
+
+    <!-- FFMPEG PARAMETERS -->
+    <param name="bitrate"   type="int" value="1000000" />
+    <param name="framerate" type="int" value="20" />
+    <param name="qmax"      type="int" value="63" />
+    <param name="gop_size"  type="int" value="30" />
+    
+    <!-- PRECONFIGURATIONS -->
+    <param name="profile"   type="string" value="main12" />
+    <param name="preset"    type="string" value="ultrafast" />
+    <param name="tune"      type="string" value="zerolatency" />
+
+</launch>   
